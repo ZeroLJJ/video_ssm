@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.FavoriteItemCustomMapper" >
+    <resultMap id="favoriteItemBO" type="favoriteItemBO" >
+        <id column="fiid" property="fiid" jdbcType="INTEGER" />
+        <result column="fidate" property="fidate" jdbcType="TIMESTAMP" />
+        <result column="video_id" property="videoId" jdbcType="INTEGER" />
+        <result column="favorite_id" property="favoriteId" jdbcType="INTEGER" />
+        <association property="videoBO" javaType="videoBO">
+            <id column="vid" property="vid" jdbcType="INTEGER" />
+            <result column="vname" property="vname" jdbcType="VARCHAR" />
+            <result column="vimg" property="vimg" jdbcType="VARCHAR" />
+            <result column="vadd_time" property="vaddTime" jdbcType="TIMESTAMP" />
+            <result column="vduration" property="vduration" jdbcType="VARCHAR" />
+            <result column="vplay_times" property="vplayTimes" jdbcType="INTEGER" />
+            <result column="vcomment" property="vcomment" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <select id="getCovorList" parameterType="int" resultType="string">
+        SELECT v.vimg
+        FROM favorite_item fi
+        LEFT JOIN video v
+        ON fi.video_id = v.vid
+        WHERE fi.favorite_id = #{fid}
+        ORDER BY fi.fiid DESC
+        limit 0, 3
+    </select>
+
+    <select id="getListByFavoriteIdAndPage" parameterType="map" resultMap="favoriteItemBO">
+        SELECT
+        fi.*,
+        v.vid,
+        v.vname,
+        v.vimg,
+        v.vadd_time,
+        v.vduration,
+        v.vplay_times,
+        v.vcomment
+        FROM favorite_item fi
+        LEFT JOIN video v
+        ON fi.video_id = v.vid
+        WHERE fi.favorite_id = #{fid}
+        ORDER BY fi.fidate DESC
+        limit #{offset},#{pageSize}
+    </select>
+
+    <!-- 取得记录的总数 -->
+    <select id="getFavoriteItemsCount" parameterType="int" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM favorite_item fi
+        LEFT JOIN video v
+        ON fi.video_id = v.vid
+        WHERE fi.favorite_id = #{fid}
+    </select>
+
+    <!-- 统计收藏夹中同一视频的明细记录数 -->
+    <select id="countByVideoAndFavorite" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM favorite_item
+        WHERE video_id = #{vid} AND favorite_id = #{fid}
+    </select>
+
+</mapper>

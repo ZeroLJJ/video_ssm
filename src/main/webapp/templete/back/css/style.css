@@ -1,0 +1,24 @@
+
+body {
+  z-index: 2;
+  overflow: hidden;
+  font-family: 'Orbitron', sans-serif;
+  background-color: black;
+  color: white;
+}
+#render{
+display: block;
+overflow: hidden;
+z-index: 1;
+margin: 0 auto;
+}
+
+#cont{
+ background: rgba(251,80,90,0.8);
+ padding: 10px;
+ position: absolute; 
+ display: block;
+ top: 40vh;
+ width: 100vw;
+ text-align: center;
+}

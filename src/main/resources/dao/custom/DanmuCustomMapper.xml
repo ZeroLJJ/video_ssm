@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.DanmuCustomMapper" >
+    <resultMap id="danmu" type="danmuBO" >
+        <id column="did" property="did" jdbcType="INTEGER" />
+        <result column="dtext" property="dtext" jdbcType="VARCHAR" />
+        <result column="dcolor" property="dcolor" jdbcType="VARCHAR" />
+        <result column="dposition" property="dposition" jdbcType="CHAR" />
+        <result column="dsize" property="dsize" jdbcType="CHAR" />
+        <result column="dtime" property="dtime" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="video_id" property="videoId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!-- 获取弹幕信息列表 -->
+    <select id="selectByVideoId" parameterType="int" resultMap="danmu">
+        SELECT *
+        FROM danmu
+        WHERE video_id = #{videoId}
+        ORDER BY did DESC
+    </select>
+
+</mapper>

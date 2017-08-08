@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.TagItemMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.TagItem" >
+    <id column="tiid" property="tiid" jdbcType="INTEGER" />
+    <result column="tidate" property="tidate" jdbcType="TIMESTAMP" />
+    <result column="tiagree" property="tiagree" jdbcType="INTEGER" />
+    <result column="video_id" property="videoId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tiid, tidate, tiagree, video_id, user_id, tag_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag_item
+    where tiid = #{tiid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tag_item
+    where tiid = #{tiid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.po.TagItem" >
+    insert into tag_item (tiid, tidate, tiagree, 
+      video_id, user_id, tag_id
+      )
+    values (#{tiid,jdbcType=INTEGER}, #{tidate,jdbcType=TIMESTAMP}, #{tiagree,jdbcType=INTEGER}, 
+      #{videoId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.TagItem" >
+    insert into tag_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tiid != null" >
+        tiid,
+      </if>
+      <if test="tidate != null" >
+        tidate,
+      </if>
+      <if test="tiagree != null" >
+        tiagree,
+      </if>
+      <if test="videoId != null" >
+        video_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="tagId != null" >
+        tag_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tiid != null" >
+        #{tiid,jdbcType=INTEGER},
+      </if>
+      <if test="tidate != null" >
+        #{tidate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tiagree != null" >
+        #{tiagree,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null" >
+        #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null" >
+        #{tagId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.TagItem" >
+    update tag_item
+    <set >
+      <if test="tidate != null" >
+        tidate = #{tidate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tiagree != null" >
+        tiagree = #{tiagree,jdbcType=INTEGER},
+      </if>
+      <if test="videoId != null" >
+        video_id = #{videoId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="tagId != null" >
+        tag_id = #{tagId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tiid = #{tiid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.TagItem" >
+    update tag_item
+    set tidate = #{tidate,jdbcType=TIMESTAMP},
+      tiagree = #{tiagree,jdbcType=INTEGER},
+      video_id = #{videoId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=VARCHAR},
+      tag_id = #{tagId,jdbcType=INTEGER}
+    where tiid = #{tiid,jdbcType=INTEGER}
+  </update>
+</mapper>

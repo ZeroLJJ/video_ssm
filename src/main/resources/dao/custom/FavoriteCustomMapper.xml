@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.FavoriteCustomMapper" >
+    <resultMap id="favoriteBO" type="favoriteBO" >
+        <id column="fid" property="fid" jdbcType="INTEGER" />
+        <result column="fname" property="fname" jdbcType="VARCHAR" />
+        <result column="fcreate_date" property="fcreateDate" jdbcType="DATE" />
+        <result column="fhave" property="fhave" jdbcType="INTEGER" />
+        <result column="ftotal" property="ftotal" jdbcType="INTEGER" />
+        <result column="fprivacy" property="fprivacy" jdbcType="CHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getFavorite" parameterType="string" resultMap="favoriteBO">
+        SELECT *
+        FROM favorite
+        WHERE user_id = #{userId}
+    </select>
+
+    <insert id="insert" parameterType="favorite">
+        <selectKey keyProperty='fid' resultType='int' order='AFTER' >
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into favorite (fid, fname, fcreate_date,
+          fhave, ftotal, fprivacy,
+          user_id)
+        values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fcreateDate,jdbcType=DATE},
+          #{fhave,jdbcType=INTEGER}, #{ftotal,jdbcType=INTEGER}, #{fprivacy,jdbcType=CHAR},
+          #{userId,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getRecentlyFavorite" parameterType="string" resultMap="favoriteBO">
+        SELECT *
+        FROM favorite
+        WHERE user_id = #{userId}
+        limit 0, 8
+    </select>
+
+    <select id="getAllFavorite" parameterType="string" resultMap="favoriteBO">
+        SELECT *
+        FROM favorite
+        WHERE user_id = #{userId}
+    </select>
+
+</mapper>

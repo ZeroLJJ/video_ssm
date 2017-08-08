@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.UserFollowCustomMapper" >
+    <resultMap id="UserFollowBO" type="UserFollowBO" >
+        <id column="ufid" property="ufid" jdbcType="INTEGER" />
+        <result column="uftime" property="uftime" jdbcType="TIMESTAMP" />
+        <result column="user_follow_id" property="userFollowId" jdbcType="VARCHAR" />
+        <result column="user_followed_id" property="userFollowedId" jdbcType="VARCHAR" />
+        <association property="userBO" javaType="userBO">
+            <id column="uid" property="uid" jdbcType="VARCHAR" />
+            <result column="uname" property="uname" jdbcType="VARCHAR" />
+            <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+            <result column="usign" property="usign" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <!-- 获取关注 -->
+    <select id="selectByFollow" parameterType="string" resultMap="UserFollowBO">
+        SELECT
+        uf.*,
+        u.uid,
+        u.uname,
+        u.uimg,
+        u.usign
+        FROM user_follow uf
+        LEFT JOIN user u
+        ON uf.user_followed_id = u.uid
+        WHERE uf.user_follow_id = #{follow_uid}
+    </select>
+
+    <!-- 获取粉丝 -->
+    <select id="selectByFollowed" parameterType="string" resultMap="UserFollowBO">
+        SELECT
+        uf.*,
+        u.uid,
+        u.uname,
+        u.uimg,
+        u.usign
+        FROM user_follow uf
+        LEFT JOIN user u
+        ON uf.user_follow_id = u.uid
+        WHERE uf.user_followed_id = #{followed_uid}
+    </select>
+
+    <!-- 获取同一关注者和被关注者统计数，用于防止重复插入 -->
+    <select id="countByFollow" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM user_follow
+        WHERE user_follow_id = #{follow_uid} AND user_followed_id = #{followed_uid}
+    </select>
+
+    <delete id="deleteFollow" parameterType="map">
+        DELETE
+        FROM user_follow
+        WHERE user_follow_id = #{follow_uid} AND user_followed_id = #{followed_uid}
+    </delete>
+
+</mapper>

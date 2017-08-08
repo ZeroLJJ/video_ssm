@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.FavoriteMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.Favorite" >
+    <id column="fid" property="fid" jdbcType="INTEGER" />
+    <result column="fname" property="fname" jdbcType="VARCHAR" />
+    <result column="fcreate_date" property="fcreateDate" jdbcType="DATE" />
+    <result column="fhave" property="fhave" jdbcType="INTEGER" />
+    <result column="ftotal" property="ftotal" jdbcType="INTEGER" />
+    <result column="fprivacy" property="fprivacy" jdbcType="CHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    fid, fname, fcreate_date, fhave, ftotal, fprivacy, user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from favorite
+    where fid = #{fid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from favorite
+    where fid = #{fid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.po.Favorite" >
+    insert into favorite (fid, fname, fcreate_date, 
+      fhave, ftotal, fprivacy, 
+      user_id)
+    values (#{fid,jdbcType=INTEGER}, #{fname,jdbcType=VARCHAR}, #{fcreateDate,jdbcType=DATE}, 
+      #{fhave,jdbcType=INTEGER}, #{ftotal,jdbcType=INTEGER}, #{fprivacy,jdbcType=CHAR}, 
+      #{userId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.Favorite" >
+    insert into favorite
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="fname != null" >
+        fname,
+      </if>
+      <if test="fcreateDate != null" >
+        fcreate_date,
+      </if>
+      <if test="fhave != null" >
+        fhave,
+      </if>
+      <if test="ftotal != null" >
+        ftotal,
+      </if>
+      <if test="fprivacy != null" >
+        fprivacy,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=INTEGER},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fcreateDate != null" >
+        #{fcreateDate,jdbcType=DATE},
+      </if>
+      <if test="fhave != null" >
+        #{fhave,jdbcType=INTEGER},
+      </if>
+      <if test="ftotal != null" >
+        #{ftotal,jdbcType=INTEGER},
+      </if>
+      <if test="fprivacy != null" >
+        #{fprivacy,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.Favorite" >
+    update favorite
+    <set >
+      <if test="fname != null" >
+        fname = #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="fcreateDate != null" >
+        fcreate_date = #{fcreateDate,jdbcType=DATE},
+      </if>
+      <if test="fhave != null" >
+        fhave = #{fhave,jdbcType=INTEGER},
+      </if>
+      <if test="ftotal != null" >
+        ftotal = #{ftotal,jdbcType=INTEGER},
+      </if>
+      <if test="fprivacy != null" >
+        fprivacy = #{fprivacy,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.Favorite" >
+    update favorite
+    set fname = #{fname,jdbcType=VARCHAR},
+      fcreate_date = #{fcreateDate,jdbcType=DATE},
+      fhave = #{fhave,jdbcType=INTEGER},
+      ftotal = #{ftotal,jdbcType=INTEGER},
+      fprivacy = #{fprivacy,jdbcType=CHAR},
+      user_id = #{userId,jdbcType=VARCHAR}
+    where fid = #{fid,jdbcType=INTEGER}
+  </update>
+</mapper>

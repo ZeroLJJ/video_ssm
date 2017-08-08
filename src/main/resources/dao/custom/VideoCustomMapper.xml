@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.VideoCustomMapper" >
+    <resultMap id="videoDetail" type="videoBO">
+        <id column="vid" property="vid" jdbcType="INTEGER" />
+        <result column="vname" property="vname" jdbcType="VARCHAR" />
+        <result column="vsummary" property="vsummary" jdbcType="VARCHAR" />
+        <result column="vmedia" property="vmedia" jdbcType="VARCHAR" />
+        <result column="vimg" property="vimg" jdbcType="VARCHAR" />
+        <result column="vadd_time" property="vaddTime" jdbcType="TIMESTAMP" />
+        <result column="vduration" property="vduration" jdbcType="VARCHAR" />
+        <result column="vduration_level" property="vdurationLevel" jdbcType="CHAR" />
+        <result column="vplay_times" property="vplayTimes" jdbcType="INTEGER" />
+        <result column="vfavorite_times" property="vfavoriteTimes" jdbcType="INTEGER" />
+        <result column="vdanmu" property="vdanmu" jdbcType="INTEGER" />
+        <result column="vscore" property="vscore" jdbcType="INTEGER" />
+        <result column="vcomment" property="vcomment" jdbcType="INTEGER" />
+        <result column="vstatus" property="vstatus" jdbcType="CHAR" />
+        <result column="small_type_id" property="smallTypeId" jdbcType="INTEGER" />
+        <result column="upload_user_id" property="uploadUserId" jdbcType="VARCHAR" />
+        <result column="check_user_id" property="checkUserId" jdbcType="VARCHAR" />
+        <association property="bigTypeBO" javaType="bigTypeBO">
+            <id column="bid" property="bid" jdbcType="INTEGER" />
+            <result column="bname" property="bname" jdbcType="VARCHAR" />
+        </association>
+        <association property="smallTypeBO" javaType="smallTypeBO">
+            <id column="sid" property="sid" jdbcType="INTEGER" />
+            <result column="sname" property="sname" jdbcType="VARCHAR" />
+        </association>
+        <association property="userBO" javaType="userBO">
+            <id column="uid" property="uid" jdbcType="VARCHAR" />
+            <result column="uname" property="uname" jdbcType="VARCHAR" />
+            <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+            <result column="usign" property="usign" jdbcType="VARCHAR" />
+            <result column="ufan" property="ufan" jdbcType="INTEGER" />
+            <result column="uworks" property="uworks" jdbcType="INTEGER" />
+        </association>
+        <collection property="tagItemBOList" ofType="tagItemBO">
+            <id column="tiid" property="tiid" jdbcType="INTEGER" />
+            <result column="tiagree" property="tiagree" jdbcType="INTEGER" />
+            <association property="tagBO" javaType="tagBO">
+                <id column="tid" property="tid" jdbcType="INTEGER" />
+                <result column="tname" property="tname" jdbcType="VARCHAR" />
+            </association>
+        </collection>
+    </resultMap>
+
+    <!-- 表名若有别名，则必须用别名引用，若只有一个表，不可以用别名 -->
+    <sql id="query_video_where">
+        <if test="name != null and name != ''">
+            and v.vname like '%${name}%'
+        </if>
+        <if test="bigType != null and bigType != ''">
+            and s.big_type_id = #{bigType}
+        </if>
+        <if test="smallType != null and smallType != ''">
+            and s.sid = #{smallType}
+        </if>
+        <if test="duration_level != null and duration_level != ''">
+            and v.vduration_level = #{duration_level}
+        </if>
+        AND v.vstatus = '1'
+    </sql>
+
+    <!-- 视频分页查询语句 -->
+    <select id="getVideoPage" parameterType="map" resultMap="videoDetail">
+        SELECT
+        v.*,
+        u.uid,
+        u.uname
+        FROM video v
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        LEFT JOIN user u
+        ON v.upload_user_id = u.uid
+        <where>
+            <include refid="query_video_where"/>
+        </where>
+        <choose>
+            <when test="orderType == 1">
+                order by v.vplay_times desc
+            </when>
+            <when test="orderType == 2">
+                order by v.vadd_time desc
+            </when>
+            <when test="orderType == 3">
+                order by v.vdanmu desc
+            </when>
+            <when test="orderType == 4">
+                order by v.vfavorite_times desc
+            </when>
+            <otherwise>
+                order by v.vid desc
+            </otherwise>
+        </choose>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- tag视频分页查询语句 -->
+    <select id="getVideoPageByTag" parameterType="map" resultMap="videoDetail">
+        SELECT
+        v.*,
+        u.uid,
+        u.uname
+        FROM tag t
+        LEFT JOIN tag_item ti
+        ON t.tid = ti.tag_id
+        LEFT JOIN video v
+        ON ti.video_id = v.vid
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        LEFT JOIN user u
+        ON v.upload_user_id = u.uid
+        <where>
+            <include refid="query_video_where"/>
+            AND t.tid = #{tag}
+        </where>
+        <choose>
+            <when test="orderType == 1">
+                order by v.vplay_times desc
+            </when>
+            <when test="orderType == 2">
+                order by v.vadd_time desc
+            </when>
+            <when test="orderType == 3">
+                order by v.vdanmu desc
+            </when>
+            <when test="orderType == 4">
+                order by v.vfavorite_times desc
+            </when>
+            <otherwise>
+                order by v.vid desc
+            </otherwise>
+        </choose>
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- 取得记录的总数 -->
+    <select id="getVideosCount" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM video v
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        <where>
+            <include refid="query_video_where"/>
+        </where>
+    </select>
+
+    <!-- tag取得记录的总数 -->
+    <select id="getVideosCountByTag" parameterType="map" resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM tag t
+        LEFT JOIN tag_item ti
+        ON t.tid = ti.tag_id
+        LEFT JOIN video v
+        ON ti.video_id = v.vid
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        <where>
+            <include refid="query_video_where"/>
+            and t.tid = #{tag}
+        </where>
+    </select>
+
+    <!-- 获取视频详情信息 -->
+    <select id="getVideoDetail" parameterType="int" resultMap="videoDetail">
+        SELECT
+            v.*,
+            b.bid,
+            b.bname,
+            s.sid,
+            s.sname,
+            u.uid,
+            u.uname,
+            u.uimg,
+            u.usign,
+            u.ufan,
+            u.uworks,
+            ti.tiid,
+            ti.tiagree,
+            t.tid,
+            t.tname
+        FROM video v left join user u
+                      ON v.upload_user_id = u.uid
+                      left join tag_item ti
+                      ON v.vid = ti.video_id
+                      left join tag t
+                      ON ti.tag_id  = t.tid
+                      left join small_type s
+                      ON v.small_type_id = s.sid
+                      LEFT JOIN big_type b
+                      ON s.big_type_id = b.bid
+        WHERE v.vid = #{vid}
+    </select>
+
+    <!-- 获取最近投稿的视频信息 -->
+    <select id="getVideoByRecentlyPost" parameterType="string" resultMap="videoDetail">
+        SELECT
+        v.*,
+        u.uid,
+        u.uname
+        FROM video v
+        LEFT JOIN user u
+        ON v.upload_user_id = u.uid
+        WHERE v.vstatus = '1'
+        <if test="uid != null and uid != ''">
+            AND v.upload_user_id = #{uid}
+        </if>
+        ORDER BY v.vadd_time DESC
+        LIMIT 0, #{size}
+    </select>
+
+    <!-- 获取某用户的投稿记录数 -->
+    <select id="countVideoByPost" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM video
+        WHERE upload_user_id = #{uid}
+    </select>
+
+    <!-- 获取某用户的投稿分页信息 -->
+    <select id="getVideoPageByPost" parameterType="map" resultMap="videoDetail">
+        SELECT *
+        FROM video
+        WHERE upload_user_id = #{uid}
+        ORDER BY vid DESC
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- 获取热门视频 -->
+    <select id="getHotVideo" parameterType="string" resultMap="videoDetail">
+        SELECT
+        v.*,
+        u.uid,
+        u.uname
+        FROM play_log p
+        LEFT JOIN video v
+        ON p.video_id = v.vid
+        <if test="bid != null and bid != ''">
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        </if>
+        LEFT JOIN user u
+        ON v.upload_user_id = u.uid
+        WHERE p.pdate > #{date} AND v.vstatus = '1'
+        <if test="bid != null and bid != ''">
+            AND s.big_type_id = #{bid}
+        </if>
+        GROUP BY v.vid
+        ORDER BY COUNT(*) DESC
+        limit 0,#{size}
+    </select>
+
+    <!-- 随机获取某种类型的视频列表 -->
+    <select id="getRandom" parameterType="int" resultMap="videoDetail">
+        SELECT
+        v.*, u.uid,
+        u.uname
+        FROM
+        video v
+        LEFT JOIN small_type s ON v.small_type_id = s.sid
+        LEFT JOIN USER u ON v.upload_user_id = u.uid
+        WHERE v.vstatus = '1' AND s.big_type_id = #{bid}
+        AND v.vid >= ( (
+            SELECT
+            MAX(v.vid)
+            FROM
+            video v
+            LEFT JOIN small_type s ON v.small_type_id = s.sid
+            WHERE v.vstatus = '1' AND s.big_type_id = #{bid}
+        ) - (
+            SELECT
+            MIN(v.vid)
+            FROM
+            video v
+            LEFT JOIN small_type s
+            on v.small_type_id = s.sid
+            WHERE v.vstatus = '1' AND s.big_type_id = #{bid}
+        )) * RAND() + (
+            SELECT
+            MIN(v.vid)
+            FROM
+            video v
+            LEFT JOIN small_type s
+            on v.small_type_id = s.sid
+            WHERE v.vstatus = '1' AND s.big_type_id = #{bid}
+        )
+        LIMIT 0,#{size}
+    </select>
+
+    <select id="getAllVideo" parameterType="map" resultMap="videoDetail">
+        SELECT
+        v.*,
+        s.sname,
+        b.bname
+        FROM video v
+        LEFT JOIN small_type s
+        ON v.small_type_id = s.sid
+        LEFT JOIN big_type b
+        ON s.big_type_id = b.bid
+        <where>
+            <if test="minTime != null and minTime!= ''">
+                AND v.vadd_time &gt;= #{minTime}
+            </if>
+            <if test="maxTime != null and maxTime!= ''">
+                AND v.vadd_time &lt;= #{maxTime}
+            </if>
+            <if test="videoName != null and videoName!= ''">
+                AND v.vname like '%${videoName}%'
+            </if>
+        </where>
+    </select>
+</mapper>

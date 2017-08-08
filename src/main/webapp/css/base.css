@@ -1,0 +1,99 @@
+
+
+.my-tip{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    display: none;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    z-index: 120;
+    height: 50px;
+    line-height: 50px;
+    padding: 0 30px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,.14);
+    background-color: rgba(0,0,0,.8);
+    -webkit-transition: opacity .3s ease;
+    transition: opacity .3s ease
+}
+
+.no-result{
+    width: auto;
+    height: auto;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 0;
+    margin-right: 0;
+    border: 1px solid #e5e9ef;
+    background: url(../images/Unknown.png) 50% 100% no-repeat;
+    background-color: #fff;
+    line-height: 500px;
+    text-align: center;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.no-result .text{
+    font-size: 25px;
+    color: #777;
+}
+
+.my-footer{
+    background-color: #acadf1;
+    padding: 40px 0;
+}
+
+.my-right{
+    text-align: center;
+    font-size: 18px;
+    font-family: cursive;
+    font-weight: bolder;
+    color: rgba(34, 34, 34, 0.86);
+}
+
+#my-success{
+    width:100%;
+    height:100%;
+    background:url(../images/success.jpg) no-repeat 0 0 / 100% 100%;
+    overflow: hidden;
+}
+
+#my-success .pane{
+    position: absolute;
+    border-radius: 4px;
+    left: 50%;
+    top: 50%;
+    width:300px;
+    height:140px;
+    margin-left:-150px;
+    margin-top:-70px;
+    background: rgba(251, 248, 255, 0.28);
+    text-align:center;
+    padding:10px;
+    color : #000000;
+}
+
+#my-success .pane .text{
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width:200px;
+    height:100px;
+    margin-left:-100px;
+    margin-top:-50px;
+    font-size: 18px;
+    line-height: 2em;
+}
+
+#my-success .pane .text a{
+    color: rgb(0, 0, 0);
+    text-decoration:none;
+}
+
+#my-success .pane .text a:hover{
+    color: rgba(0, 78, 255, 0.92);
+}

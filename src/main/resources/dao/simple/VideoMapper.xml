@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.VideoMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.Video" >
+    <id column="vid" property="vid" jdbcType="INTEGER" />
+    <result column="vname" property="vname" jdbcType="VARCHAR" />
+    <result column="vsummary" property="vsummary" jdbcType="VARCHAR" />
+    <result column="vmedia" property="vmedia" jdbcType="VARCHAR" />
+    <result column="vimg" property="vimg" jdbcType="VARCHAR" />
+    <result column="vadd_time" property="vaddTime" jdbcType="TIMESTAMP" />
+    <result column="vduration" property="vduration" jdbcType="VARCHAR" />
+    <result column="vduration_level" property="vdurationLevel" jdbcType="CHAR" />
+    <result column="vplay_times" property="vplayTimes" jdbcType="INTEGER" />
+    <result column="vfavorite_times" property="vfavoriteTimes" jdbcType="INTEGER" />
+    <result column="vdanmu" property="vdanmu" jdbcType="INTEGER" />
+    <result column="vscore" property="vscore" jdbcType="INTEGER" />
+    <result column="vcomment" property="vcomment" jdbcType="INTEGER" />
+    <result column="vstatus" property="vstatus" jdbcType="CHAR" />
+    <result column="small_type_id" property="smallTypeId" jdbcType="INTEGER" />
+    <result column="upload_user_id" property="uploadUserId" jdbcType="VARCHAR" />
+    <result column="check_user_id" property="checkUserId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    vid, vname, vsummary, vmedia, vimg, vadd_time, vduration, vduration_level, vplay_times, 
+    vfavorite_times, vdanmu, vscore, vcomment, vstatus, small_type_id, upload_user_id, 
+    check_user_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where vid = #{vid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from video
+    where vid = #{vid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.po.Video" >
+    insert into video (vid, vname, vsummary, 
+      vmedia, vimg, vadd_time, 
+      vduration, vduration_level, vplay_times, 
+      vfavorite_times, vdanmu, vscore, 
+      vcomment, vstatus, small_type_id, 
+      upload_user_id, check_user_id)
+    values (#{vid,jdbcType=INTEGER}, #{vname,jdbcType=VARCHAR}, #{vsummary,jdbcType=VARCHAR}, 
+      #{vmedia,jdbcType=VARCHAR}, #{vimg,jdbcType=VARCHAR}, #{vaddTime,jdbcType=TIMESTAMP}, 
+      #{vduration,jdbcType=VARCHAR}, #{vdurationLevel,jdbcType=CHAR}, #{vplayTimes,jdbcType=INTEGER}, 
+      #{vfavoriteTimes,jdbcType=INTEGER}, #{vdanmu,jdbcType=INTEGER}, #{vscore,jdbcType=INTEGER}, 
+      #{vcomment,jdbcType=INTEGER}, #{vstatus,jdbcType=CHAR}, #{smallTypeId,jdbcType=INTEGER}, 
+      #{uploadUserId,jdbcType=VARCHAR}, #{checkUserId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.Video" >
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vid != null" >
+        vid,
+      </if>
+      <if test="vname != null" >
+        vname,
+      </if>
+      <if test="vsummary != null" >
+        vsummary,
+      </if>
+      <if test="vmedia != null" >
+        vmedia,
+      </if>
+      <if test="vimg != null" >
+        vimg,
+      </if>
+      <if test="vaddTime != null" >
+        vadd_time,
+      </if>
+      <if test="vduration != null" >
+        vduration,
+      </if>
+      <if test="vdurationLevel != null" >
+        vduration_level,
+      </if>
+      <if test="vplayTimes != null" >
+        vplay_times,
+      </if>
+      <if test="vfavoriteTimes != null" >
+        vfavorite_times,
+      </if>
+      <if test="vdanmu != null" >
+        vdanmu,
+      </if>
+      <if test="vscore != null" >
+        vscore,
+      </if>
+      <if test="vcomment != null" >
+        vcomment,
+      </if>
+      <if test="vstatus != null" >
+        vstatus,
+      </if>
+      <if test="smallTypeId != null" >
+        small_type_id,
+      </if>
+      <if test="uploadUserId != null" >
+        upload_user_id,
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vid != null" >
+        #{vid,jdbcType=INTEGER},
+      </if>
+      <if test="vname != null" >
+        #{vname,jdbcType=VARCHAR},
+      </if>
+      <if test="vsummary != null" >
+        #{vsummary,jdbcType=VARCHAR},
+      </if>
+      <if test="vmedia != null" >
+        #{vmedia,jdbcType=VARCHAR},
+      </if>
+      <if test="vimg != null" >
+        #{vimg,jdbcType=VARCHAR},
+      </if>
+      <if test="vaddTime != null" >
+        #{vaddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vduration != null" >
+        #{vduration,jdbcType=VARCHAR},
+      </if>
+      <if test="vdurationLevel != null" >
+        #{vdurationLevel,jdbcType=CHAR},
+      </if>
+      <if test="vplayTimes != null" >
+        #{vplayTimes,jdbcType=INTEGER},
+      </if>
+      <if test="vfavoriteTimes != null" >
+        #{vfavoriteTimes,jdbcType=INTEGER},
+      </if>
+      <if test="vdanmu != null" >
+        #{vdanmu,jdbcType=INTEGER},
+      </if>
+      <if test="vscore != null" >
+        #{vscore,jdbcType=INTEGER},
+      </if>
+      <if test="vcomment != null" >
+        #{vcomment,jdbcType=INTEGER},
+      </if>
+      <if test="vstatus != null" >
+        #{vstatus,jdbcType=CHAR},
+      </if>
+      <if test="smallTypeId != null" >
+        #{smallTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadUserId != null" >
+        #{uploadUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkUserId != null" >
+        #{checkUserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.Video" >
+    update video
+    <set >
+      <if test="vname != null" >
+        vname = #{vname,jdbcType=VARCHAR},
+      </if>
+      <if test="vsummary != null" >
+        vsummary = #{vsummary,jdbcType=VARCHAR},
+      </if>
+      <if test="vmedia != null" >
+        vmedia = #{vmedia,jdbcType=VARCHAR},
+      </if>
+      <if test="vimg != null" >
+        vimg = #{vimg,jdbcType=VARCHAR},
+      </if>
+      <if test="vaddTime != null" >
+        vadd_time = #{vaddTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="vduration != null" >
+        vduration = #{vduration,jdbcType=VARCHAR},
+      </if>
+      <if test="vdurationLevel != null" >
+        vduration_level = #{vdurationLevel,jdbcType=CHAR},
+      </if>
+      <if test="vplayTimes != null" >
+        vplay_times = #{vplayTimes,jdbcType=INTEGER},
+      </if>
+      <if test="vfavoriteTimes != null" >
+        vfavorite_times = #{vfavoriteTimes,jdbcType=INTEGER},
+      </if>
+      <if test="vdanmu != null" >
+        vdanmu = #{vdanmu,jdbcType=INTEGER},
+      </if>
+      <if test="vscore != null" >
+        vscore = #{vscore,jdbcType=INTEGER},
+      </if>
+      <if test="vcomment != null" >
+        vcomment = #{vcomment,jdbcType=INTEGER},
+      </if>
+      <if test="vstatus != null" >
+        vstatus = #{vstatus,jdbcType=CHAR},
+      </if>
+      <if test="smallTypeId != null" >
+        small_type_id = #{smallTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadUserId != null" >
+        upload_user_id = #{uploadUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="checkUserId != null" >
+        check_user_id = #{checkUserId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where vid = #{vid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.Video" >
+    update video
+    set vname = #{vname,jdbcType=VARCHAR},
+      vsummary = #{vsummary,jdbcType=VARCHAR},
+      vmedia = #{vmedia,jdbcType=VARCHAR},
+      vimg = #{vimg,jdbcType=VARCHAR},
+      vadd_time = #{vaddTime,jdbcType=TIMESTAMP},
+      vduration = #{vduration,jdbcType=VARCHAR},
+      vduration_level = #{vdurationLevel,jdbcType=CHAR},
+      vplay_times = #{vplayTimes,jdbcType=INTEGER},
+      vfavorite_times = #{vfavoriteTimes,jdbcType=INTEGER},
+      vdanmu = #{vdanmu,jdbcType=INTEGER},
+      vscore = #{vscore,jdbcType=INTEGER},
+      vcomment = #{vcomment,jdbcType=INTEGER},
+      vstatus = #{vstatus,jdbcType=CHAR},
+      small_type_id = #{smallTypeId,jdbcType=INTEGER},
+      upload_user_id = #{uploadUserId,jdbcType=VARCHAR},
+      check_user_id = #{checkUserId,jdbcType=VARCHAR}
+    where vid = #{vid,jdbcType=INTEGER}
+  </update>
+</mapper>

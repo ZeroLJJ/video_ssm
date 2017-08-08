@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.UserFollowMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.UserFollow" >
+    <id column="ufid" property="ufid" jdbcType="INTEGER" />
+    <result column="uftime" property="uftime" jdbcType="TIMESTAMP" />
+    <result column="user_follow_id" property="userFollowId" jdbcType="VARCHAR" />
+    <result column="user_followed_id" property="userFollowedId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ufid, uftime, user_follow_id, user_followed_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_follow
+    where ufid = #{ufid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_follow
+    where ufid = #{ufid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.po.UserFollow" >
+    insert into user_follow (ufid, uftime, user_follow_id, 
+      user_followed_id)
+    values (#{ufid,jdbcType=INTEGER}, #{uftime,jdbcType=TIMESTAMP}, #{userFollowId,jdbcType=VARCHAR}, 
+      #{userFollowedId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.UserFollow" >
+    insert into user_follow
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ufid != null" >
+        ufid,
+      </if>
+      <if test="uftime != null" >
+        uftime,
+      </if>
+      <if test="userFollowId != null" >
+        user_follow_id,
+      </if>
+      <if test="userFollowedId != null" >
+        user_followed_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ufid != null" >
+        #{ufid,jdbcType=INTEGER},
+      </if>
+      <if test="uftime != null" >
+        #{uftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFollowId != null" >
+        #{userFollowId,jdbcType=VARCHAR},
+      </if>
+      <if test="userFollowedId != null" >
+        #{userFollowedId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.UserFollow" >
+    update user_follow
+    <set >
+      <if test="uftime != null" >
+        uftime = #{uftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userFollowId != null" >
+        user_follow_id = #{userFollowId,jdbcType=VARCHAR},
+      </if>
+      <if test="userFollowedId != null" >
+        user_followed_id = #{userFollowedId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ufid = #{ufid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.UserFollow" >
+    update user_follow
+    set uftime = #{uftime,jdbcType=TIMESTAMP},
+      user_follow_id = #{userFollowId,jdbcType=VARCHAR},
+      user_followed_id = #{userFollowedId,jdbcType=VARCHAR}
+    where ufid = #{ufid,jdbcType=INTEGER}
+  </update>
+</mapper>

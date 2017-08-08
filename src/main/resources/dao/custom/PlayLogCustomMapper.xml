@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.PlayLogCustomMapper" >
+    <resultMap id="VideoBO" type="videoBO">
+        <id column="vid" property="vid" jdbcType="INTEGER" />
+        <result column="vname" property="vname" jdbcType="VARCHAR" />
+        <result column="vsummary" property="vsummary" jdbcType="VARCHAR" />
+        <result column="vmedia" property="vmedia" jdbcType="VARCHAR" />
+        <result column="vimg" property="vimg" jdbcType="VARCHAR" />
+        <result column="vadd_time" property="vaddTime" jdbcType="TIMESTAMP" />
+        <result column="vduration" property="vduration" jdbcType="VARCHAR" />
+        <result column="vduration_level" property="vdurationLevel" jdbcType="CHAR" />
+        <result column="vplay_times" property="vplayTimes" jdbcType="INTEGER" />
+        <result column="vfavorite_times" property="vfavoriteTimes" jdbcType="INTEGER" />
+        <result column="vdanmu" property="vdanmu" jdbcType="INTEGER" />
+        <result column="vscore" property="vscore" jdbcType="INTEGER" />
+        <result column="vcomment" property="vcomment" jdbcType="INTEGER" />
+        <result column="vstatus" property="vstatus" jdbcType="CHAR" />
+        <result column="small_type_id" property="smallTypeId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="history" type="playLogBO">
+        <id column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="pdate" property="pdate" jdbcType="TIMESTAMP" />
+        <association property="videoBO" javaType="videoBO">
+            <id column="vid" property="vid" jdbcType="INTEGER" />
+            <result column="vname" property="vname" jdbcType="VARCHAR" />
+            <result column="vimg" property="vimg" jdbcType="VARCHAR" />
+            <association property="smallTypeBO" javaType="smallTypeBO">
+                <id column="sid" property="sid" jdbcType="INTEGER" />
+                <result column="sname" property="sname" jdbcType="VARCHAR" />
+            </association>
+            <association property="userBO" javaType="userBO">
+                <id column="uid" property="uid" jdbcType="VARCHAR" />
+                <result column="uname" property="uname" jdbcType="VARCHAR" />
+                <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+            </association>
+        </association>
+    </resultMap>
+
+    <resultMap id="monthPlayLog" type="monthPlayLog">
+        <result column="月份" property="month" jdbcType="INTEGER" />
+        <result column="播放量" property="playTimes" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!-- &gt;大于 &lt;小于 -->
+    <sql id="query_rank_where">
+        <if test="videoType != null and videoType != ''">
+            and s.big_type_id = #{videoType}
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and p.pdate &gt;= #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and p.pdate &lt;= #{endTime}
+        </if>
+    </sql>
+
+    <!-- 排行信息查询语句,只查询10条 -->
+    <select id="getRank" parameterType="map" resultMap="VideoBO">
+        SELECT v.*
+        FROM play_log p
+        LEFT JOIN video v
+        ON p.video_id = v.vid
+        <if test="videoType != null and videoType != ''">
+            LEFT JOIN small_type s
+            ON v.small_type_id = s.sid
+            LEFT JOIN big_type b
+            ON s.big_type_id = b.bid
+        </if>
+        <where>
+            <include refid="query_rank_where"/>
+        </where>
+        GROUP BY v.vid
+        ORDER BY COUNT(*) desc
+        LIMIT 0,10
+    </select>
+
+    <!-- 获取某用户的最新历史播放记录（15条） -->
+    <!-- 查询语句思路：先将视频分组后查询出相同视频的最新播放时间，再用最新
+         播放时间获取对应的播放记录id，再用id关联去其他表 -->
+    <select id="getHistory" parameterType="string" resultMap="history">
+    SELECT
+    p.pid,
+    p.pdate,
+    v.vid,
+    v.vname,
+    v.vimg,
+    s.sid,
+    s.sname,
+    u.uid,
+    u.uname,
+    u.uimg
+    FROM (SELECT
+          p.pid as pid,p.pdate as pdate,p.video_id as video_id
+          FROM (SELECT max(p.pdate) as max_time
+                FROM play_log p
+                LEFT JOIN video v
+                ON p.video_id = v.vid
+                WHERE p.user_id = #{userId}
+                GROUP BY v.vid) mt ,play_log p
+                WHERE p.pdate = mt.max_time) p
+    LEFT JOIN video v
+    ON p.video_id = v.vid
+    LEFT JOIN small_type s
+    ON v.small_type_id = s.sid
+    LEFT JOIN user u
+    ON v.upload_user_id = u.uid
+    ORDER BY p.pdate desc
+    LIMIT 0,15
+    </select>
+
+    <select id="countMonth" parameterType="map" resultMap="monthPlayLog">
+        SELECT
+            MONTH (p.pdate) AS 月份,
+            count(*) AS 播放量
+        FROM
+            play_log p
+        LEFT JOIN video v ON p.video_id = v.vid
+        LEFT JOIN small_type s ON v.small_type_id = s.sid
+        WHERE
+            YEAR (p.pdate) = #{year}
+            AND s.big_type_id = #{bid}
+        GROUP BY
+            MONTH (p.pdate)
+    </select>
+</mapper>

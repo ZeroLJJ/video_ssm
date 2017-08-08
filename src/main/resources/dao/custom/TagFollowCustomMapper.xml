@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.TagFollowCustomMapper" >
+    <resultMap id="TagFollowBO" type="TagFollowBO" >
+        <id column="tfid" property="tfid" jdbcType="INTEGER" />
+        <result column="tftime" property="tftime" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+        <association property="tagBO" javaType="tagBO">
+            <id column="tid" property="tid" jdbcType="INTEGER" />
+            <result column="tname" property="tname" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <select id="countByUserAndTag" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM tag_follow
+        WHERE user_id = #{uid} AND tag_id = #{tid}
+    </select>
+
+    <delete id="deleteFollow" parameterType="map">
+        DELETE
+        FROM tag_follow
+        WHERE user_id = #{uid} AND tag_id = #{tid}
+    </delete>
+
+    <select id="selectListByUserId" parameterType="string" resultMap="TagFollowBO">
+        SELECT
+        tf.*,
+        t.tid,
+        t.tname
+        FROM tag_follow tf
+        LEFT JOIN tag t
+        ON tf.tag_id = t.tid
+        WHERE tf.user_id = #{uid}
+    </select>
+
+</mapper>

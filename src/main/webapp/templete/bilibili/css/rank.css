@@ -1,0 +1,753 @@
+body{
+    min-width: 1180px;
+}
+.main-inner{
+    width: 1160px;
+}
+@media (max-width: 1366px){
+    .main-inner{
+        width: 980px;
+    }
+}
+
+.main-inner .main-title{
+    width: 100%;
+    height: 120px;
+    margin-bottom: 5px;
+    background-image: url('../images/rank-title.png');
+    background-repeat: no-repeat;
+    background-position: center ;
+}
+
+.main-inner .main-title.animel{
+    background-position: center 26px;
+}
+.main-inner .main-title.bangumi{
+    background-position: center -1076px;
+}
+.main-inner .main-title.music{
+    background-position: center -75px;
+}
+.main-inner .main-title.dance{
+    background-position: center -176px;
+}
+.main-inner .main-title.game{
+    background-position: center -277px;
+}
+.main-inner .main-title.tech{
+    background-position: center -376px;
+}
+.main-inner .main-title.kichiku{
+    background-position: center -477px;
+
+}
+.main-inner .main-title.life{
+    background-position: center -576px;
+
+}
+.main-inner .main-title.ent{
+    background-position: center -677px;
+
+}
+.main-inner .main-title.fashion{
+    background-position: center -779px;
+
+}
+.main-inner .main-title.film{
+    background-position: center -876px;
+
+}
+.main-inner .main-title.tv{
+    background-position: center -976px;
+}
+
+.main-inner .side-bar-holder{
+    position: fixed;
+    top: 167px;
+}
+.main-inner .side-bar{
+    width: 52px;
+    height: 520px;
+    display: inline-block;
+    position:relative;
+    left: -80px;
+}
+.main-inner .side-bar-tag{
+    width: 52px;
+    height: 12px;
+    padding:14px 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: #6d757a;
+    cursor: pointer;
+}
+.main-inner .side-bar-tag[data]:hover{
+    color:#00a1d6;
+}
+.main-inner .side-bar-tag.on{
+    background-image:url('../images/icons.png');
+    background-position: -246px -2058px;
+    color: #00a1d6;
+}
+.main-inner .main{
+    min-height: 520px;
+}
+.main .loading-holder .loading{
+    height:520px;
+    width:100%;
+}
+.main .loading-holder .loading+span{
+    display: none;
+}
+.main .loading-holder .loading.die{
+    height:56px;
+    margin-top:200px;
+    background-image: url('/images/loadingDie.png');
+    background-position: center -25px;
+}
+.main .loading-holder .loading.die+span{
+    display: inline-block;
+}
+.main-inner .main .wait-tip{
+    font-size: 20px;
+    padding-top: 200px;
+    text-align: center;
+
+}
+.main-inner .main .ranking-list-sheet{
+    font-size: 0px;
+    width: 1212px;
+}
+.main-inner .main .ranking-list-sheet.floors .ranking-list{
+    margin-bottom: 40px;
+}
+@media (max-width: 1366px){
+    .main-inner .main .ranking-list-sheet{
+        width: 1020px;
+    }
+}
+.main-inner .ranking-list{
+    width: 352px;
+    margin-right: 52px;
+    display: inline-block;
+    text-align: left;
+    vertical-align: top;
+}
+.ranking-list .head{
+    height: 40px;
+    font-size: 0;
+}
+.ranking-list .head .icon{
+    width:40px;
+    height:40px;
+    margin-right:12px;
+    display: inline-block;
+    background-image: url('../images/icons.png');
+    vertical-align: middle;
+
+}
+.ranking-list .head .icon.all{
+    height: 51px;
+    margin-top: -11px;
+    background-position: -140px -1094px;
+}
+.ranking-list .head .icon.animel{
+    background-position: -141px -908px;
+}
+.ranking-list .head .icon.bangumi{
+    background-position: -141px -142px;
+}
+.ranking-list .head .icon.music{
+    background-position: -141px -266px;
+}
+.ranking-list .head .icon.dance{
+    background-position: -141px -461px;
+}
+.ranking-list .head .icon.game{
+    background-position: -141px -203px;
+}
+.ranking-list .head .icon.tech{
+    background-position: -141px -525px;
+}
+.ranking-list .head .icon.life{
+    width: 41px;
+    margin-left: -1px;
+    background-position: -137px -970px;
+}
+.ranking-list .head .icon.kichiku{
+    background-position: -141px -332px;
+}
+.ranking-list .head .icon.fashion{
+    background-position: -141px -718px;
+}
+.ranking-list .head .icon.ent{
+    background-position: -141px -1032px;
+}
+.ranking-list .head .icon.film{
+    background-position: -141px -396px;
+}
+.ranking-list .head .icon.tv{
+    background-position: -141px -845px;
+}
+.ranking-list .head .icon.tag{
+    height: 41px;
+    width: 42px;
+    margin-top:-1px;
+    margin-left: -2px;
+    background-position: -139px -1164px;
+}
+.ranking-list .title-wrap{
+    width: 300px;
+    height: 26px;
+    display: inline-block;
+    line-height: 26px;
+    vertical-align: top;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #6d757a;
+}
+.ranking-list .head .title{
+    height: 26px;
+    line-height: 36px;
+    font-size: 16px;
+    color: #222;
+    display: inline-block;
+    cursor: pointer;
+}
+.ranking-list .head .title:hover{
+    color:#00a1d6;
+}
+
+.ranking-list .head a{
+    height: 12px;
+    width: 42px;
+    color:#99a2aa;
+    float: right;
+    font-size: 12px;
+    margin: 8px 0 0 12px;
+    display: inline-block;
+    background-image: url('../images/icons.png');
+    background-position: -442px -214px;
+}
+.ranking-list .head a:hover{
+    color:#00a1d6;
+}
+.ranking-list ul.list li{
+    height: 74px;
+    margin-left: 20px;
+    border-bottom: dashed 1px #e5e9ef;
+    font-size: 0;
+    box-sizing:border-box;
+}
+.ranking-list ul.list li.empty *{
+    display: none;
+}
+.ranking-list ul.list li.clear-border{
+    border-width:0;
+}
+.ranking-list ul.list div{
+    display: inline-block;
+    *margin-top: 12px;
+    font-size:12px;
+    vertical-align: top;
+}
+.ranking-list ul.list li .icon{
+    width: 16px;
+    height: 16px;
+    line-height: 18px;
+    margin-top: 14px;
+    box-sizing: border-box;
+    background-color:#b8c0cc;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    font-family: "Microsoft YaHei";
+    color: #fff;
+}
+.ranking-list ul.list li .icon.top{
+    width: 20px;
+    height: 18px;
+    margin-top: 16px;
+    margin-left: -2px;
+    margin-right: -2px;
+    border-radius: 0;
+    background: transparent;
+    background-image: url('../images/icons.png');
+}
+.ranking-list ul.list li .icon.top.top1{
+    background-position: -726px -1491px;
+}
+.ranking-list ul.list li .icon.top.top2{
+    background-position: -726px -1557px;
+
+}
+.ranking-list ul.list li .icon.top.top3{
+    background-position: -726px -1622px;
+}
+.ranking-list ul.list li .image-holder{
+    width: 80px;
+    height: 50px;
+    border-radius:4px;
+    margin-left: 16px;
+    margin-top: 12px;
+    overflow: hidden;
+}
+.ranking-list ul.list li img{
+    width: 100%;
+    height: 100%;
+}
+.ranking-list ul.list li .title{
+    line-height: 18px;
+    max-height: 36px;
+    max-width: 180px;
+    overflow: hidden;
+    margin-left: 8px;
+    margin-top: 16px;
+    vertical-align: top;
+    box-sizing: border-box;
+    color: #222;
+}
+.ranking-list ul.list li .title a{
+    color: inherit;
+}
+.ranking-list ul.list li .title a:hover{
+    color:#00a1d6;
+}
+@media (max-width: 1366px){
+    .main-inner .ranking-list{
+        width: 300px;
+        margin-right: 40px;
+    }
+    .ranking-list .title-wrap{
+        width: 248px;
+    }
+    .ranking-list ul.list li .title{
+        width: 145px;
+    }
+
+}
+.ranking-list ul.list li .rank-arrow{
+    width:10px;
+    height: 20px;
+    float:right;
+    margin-top: 16px;
+    background-image: url('../images/icons.png');
+    cursor: pointer;
+}
+.ranking-list ul.list li .rank-arrow.up{
+    background-position:-283px -2136px;
+}
+.ranking-list ul.list li .rank-arrow.down{
+    background-position:-283px -2200px;
+}
+.ranking-list ul.list li .rank-arrow.moewiki{
+    background-position: -283px -2264px;
+}
+
+.ranking-list .foot{
+    padding-left: 24px;
+}
+.ranking-list .foot .desc-button{
+    height:36px;
+    width: 100%;
+    line-height: 36px;
+    border:1px #e5e9ef solid;
+    box-sizing:border-box;
+    background-color: #f4f5f7;
+    display: inline-block;
+    border-radius:4px;
+    color:#6d757a;
+    font-size: 12px;
+    text-align: center;
+}
+.ranking-list .foot .desc-button:hover{
+    background-color: #ccd0d7;
+}
+.ranking-list .loading-holder .loading.die{
+    margin-top: 240px;
+}
+.ranking-list .loading-holder span{
+    font-size:12px;
+}
+.bangumi-recommend-banner{
+
+    margin: 48px 0 36px;
+    font-size: 0;
+    text-align: left;
+}
+.bangumi-recommend-banner .bangumi-block{
+    width: 275px;
+    height: 130px;
+    padding-left: 125px;
+    padding-top: 18px;
+    margin-right: 20px;
+    box-sizing: border-box;
+    border-bottom-left-radius: 65px;
+    border-top-left-radius: 65px;
+    border-bottom-right-radius: 4px;
+    border-top-right-radius: 4px;
+    position: relative;
+    display: inline-block;
+    color: #fff;
+    background:orange;
+    vertical-align: bottom;
+    font-family: "Microsoft YaHei";
+}
+.bangumi-recommend-banner .bangumi-block+.bangumi-block+.bangumi-block+.bangumi-block{
+    margin-right: 0;
+}
+
+.bangumi-recommend-banner .bangumi-block .portrait{
+    height: 181px;
+    width: 120px;
+    position: absolute;
+    top: -25px;
+    left: 0;
+}
+
+.bangumi-recommend-banner .bangumi-block .title{
+    max-width: 170px;
+    max-height: 20px;
+    overflow-y: hidden;
+    margin-bottom: 12px;
+    margin-right: 20px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight:  bold;
+    white-space: nowrap;
+    display: block;
+    color: #fff;
+}
+.bangumi-recommend-banner .bangumi-block .data-cell{
+    font-size: 12px;
+    font-weight:  bold;
+    width: 58px;
+    height: 32px;
+    display: inline-block;
+}
+.bangumi-recommend-banner .bangumi-block .data-cell.line{
+    border-right: 1px solid #fff;
+    margin-right: 10px;
+}
+.bangumi-recommend-banner .bangumi-block .data-cell div{
+    padding-bottom: 8px;
+}
+.bangumi-recommend-banner .bangumi-block .tag-list{
+    margin-top: 15px;
+}
+.bangumi-recommend-banner .bangumi-block .tag-list a{
+    padding: 5px 4px;
+    margin-right: 6px;
+    border: 1px solid #fff;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+    color:#fff;
+    white-space:nowrap;
+}
+
+@media (max-width: 1366px){
+    .bangumi-recommend-banner .bangumi-block{
+        width: 313px;
+    }
+    .bangumi-recommend-banner .bangumi-block:nth-child(3){
+        margin-right: 0;
+    }
+    .bangumi-recommend-banner .bangumi-block:nth-child(4){
+        display: none;
+    }
+}
+.tag-recommend-banner{
+    width: 100%;
+    height: 64px;
+    line-height: 64px;
+    margin:48px 0 36px;
+    border-bottom-left-radius: 65px;
+    border-top-left-radius: 65px;
+    overflow: hidden;
+    background-color:#f4f5f7;
+}
+.tag-recommend-banner .icon{
+    width: 120px;
+    height: 54px;
+    line-height: 54px;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
+    box-sizing: border-box;
+    border-radius: 27px;
+    background-color: #fff;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #f25d8e;
+}
+.tag-recommend-banner .tag{
+    height: 24px;
+    padding: 3px 8px;
+    margin-right: 10px;
+    border:1px #e5e9ef solid;
+    border-radius: 12px;
+    background: #fff;
+    box-sizing:border-box;
+    color: #6d757a;
+    vertical-align: middle;
+    transition:0.3s;
+    -webkit-transition:0.3s;
+    -moz-transition:0.3s;
+    -o-transition:0.3s;
+}
+.tag-recommend-banner .tag:hover{
+    border-color:#00a1d6;
+    color:#00a1d6;
+}
+.main-inner .main-title.min-title{
+    padding-left: 240px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.main-inner .main-title.min-title.animel{
+    background-position: left 26px;
+}
+.main-inner .main-title.min-title.bangumi{
+    background-position: left -1076px;
+}
+.main-inner .main-title.min-title.music{
+    background-position: left -75px;
+}
+.main-inner .main-title.min-title.dance{
+    background-position: left -176px;
+}
+.main-inner .main-title.min-title.game{
+    background-position: left -277px;
+
+}
+.main-inner .main-title.min-title.tech{
+    background-position: left -376px;
+}
+.main-inner .main-title.min-title.kichiku{
+    background-position: left -477px;
+
+}
+.main-inner .main-title.min-title.life{
+    background-position: left -576px;
+
+}
+.main-inner .main-title.min-title.ent{
+    background-position: left -677px;
+
+}
+.main-inner .main-title.min-title.fashion{
+    background-position: left -779px;
+
+}
+.main-inner .main-title.min-title.film{
+    background-position: left -876px;
+
+}
+.main-inner .main-title.min-title.tv{
+    background-position: left -976px;
+}
+.main-inner .main-title.min-title.all{
+    background-size:240px;
+    background-position:left;
+
+}
+
+.main-title.min-title .filter-dock{
+    height: 125px;
+    line-height: 125px;
+    padding-left: 50px;
+    background-color: #fff;
+    cursor: inherit;
+}
+.main-title.min-title .filter-dock ul{
+    width: 100%;
+    height: 32px;
+    vertical-align: middle;
+    display: inline-block;
+}
+.main-title.min-title .filter-dock li{
+    cursor: pointer;
+}
+.main-title.min-title .filter-dock li.left{
+    width: 64px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 4px;
+    text-align: center;
+    color: #222;
+}
+.main-title.min-title .filter-dock li.left.on{
+    font-size:14px;
+    background-color: #00a1d6;
+    color: #fff;
+}
+.main-title.min-title .filter-dock li.left:hover{
+    color:#00a1d6;
+}
+.main-title.min-title .filter-dock li.left.on:hover{
+    color:#fff;
+}
+.main-title.min-title .filter-dock li.right{
+    height: 32px;
+    width: initial;
+    line-height: 32px;
+    margin-left: 16px;
+    border-radius: 0;
+    float: right;
+    position: relative;
+    color:#6d757a;
+}
+.main-title.min-title .filter-dock li.right:hover{
+    color:#00a1d6;
+}
+
+.main-title.min-title .filter-dock li.right.clear-margin{
+    margin-left: 0;
+}
+.main-title.min-title .filter-dock li.right.on{
+    border-bottom: 1px solid #00a1d6;
+    color: #00a1d6;
+}
+.main-title.min-title .filter-dock li.right.on:after{
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: transparent url(../images/icons.png) -858px -535px no-repeat;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    margin-left: -3px;
+    visibility: visible;
+}
+
+.main.video-list{
+    width: 1188px;
+    font-size: 0px;
+}
+.main .video-block{
+    width: 170px;
+    height: 210px;
+    margin-right: 28px;
+    margin-bottom: 20px;
+    display: inline-block;
+    border:1px solid #e5e9ef;
+    border-radius: 4px;
+    box-sizing:border-box;
+    overflow: hidden;
+}
+@media (max-width: 1366px){
+    .main.video-list{
+        width: 1015px;
+    }
+    .main .video-block{
+        margin-right: 33px;
+    }
+}
+.main .video-block .cover{
+    height: 106px;
+    line-height: 106px;
+    text-align: right;
+    background-size: cover;
+    display: block;
+    position: relative;
+}
+.main .video-block .cover img{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+}
+.main .video-block .cover .rank-number{
+    width: 24px;
+    height: 24px;
+    padding-top: 4px;
+    margin: 4px;
+    border-radius: 4px;
+    background-color: #00a1d6;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    color: #fff;
+    font: 16px Arial;
+}
+.main .video-block .cover .total-time{
+    height: 24px;
+    line-height: 24px;
+    padding:5px 4px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 4px 0 0 0;
+    box-sizing:border-box;
+    display: inline-block;
+    position:absolute;
+    bottom: 0;
+    right: 0;
+    vertical-align: bottom;
+    color: #fff;
+    font: 12px Arial;
+}
+.main .video-block .info-area{
+    padding:12px 10px 0 10px;
+}
+.main .video-block .info-area .title{
+    height: 36px;
+    line-height: 18px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #222;
+    display: block;
+}
+.main .video-block .info-area .title:hover{
+    color:#00a1d6;
+}
+.main .video-block .info-area ul{
+    padding-top: 12px;
+    font-size: 0;
+}
+.main .video-block .info-area li{
+    line-height: 18px;
+    width: 50%;
+    display: inline-block;
+    font-size: 12px;
+    color: #99a2aa;
+}
+.main .video-block .info-area li.author-holder{
+    width: 100%;
+    height: 16px;
+    overflow: hidden;
+
+}
+.main .video-block .info-area li span{
+    padding-left: 6px;
+    box-sizing:border-box;
+}
+.loading-holder {
+    text-align: center;
+}
+.loading-holder .loading{
+    background-image: url('/images/loadingTV.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.rocket-launch{
+    float:right;
+}
+.rocket{
+    bottom: 100px;
+    width: 150px;
+    height: 150px;
+    position: fixed;
+    display: none;
+    cursor: pointer;
+    background-image: url("/bl2se/images/rocket_top.png");
+    float: right;
+}

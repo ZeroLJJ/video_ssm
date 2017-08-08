@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.TagItemCustomMapper" >
+    <resultMap id="TagItemBO" type="tagItemBO" >
+        <id column="tiid" property="tiid" jdbcType="INTEGER" />
+        <result column="tidate" property="tidate" jdbcType="TIMESTAMP" />
+        <result column="tiagree" property="tiagree" jdbcType="INTEGER" />
+        <result column="video_id" property="videoId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="tag_id" property="tagId" jdbcType="INTEGER" />
+        <association property="tagBO" javaType="tagBO">
+            <id column="tid" property="tid" jdbcType="INTEGER" />
+            <result column="tname" property="tname" jdbcType="VARCHAR" />
+        </association>
+    </resultMap>
+
+    <select id="selectByTagAndVideo" parameterType="map" resultType="tagItem">
+        SELECT *
+        FROM tag_item
+        WHERE video_id = #{videoId} AND tag_id = #{tagId}
+    </select>
+
+    <select id="selectByPrimary" parameterType="int" resultMap="TagItemBO">
+        SELECT
+        ti.*,
+        t.tid,
+        t.tname
+        FROM tag_item ti
+        LEFT JOIN tag t
+        ON ti.tag_id = t.tid
+        WHERE ti.tiid = #{tagItemId}
+    </select>
+
+    <insert id="insertReturnId" parameterType="entity.po.TagItem" >
+        <selectKey keyProperty='tiid' resultType='int' order='AFTER' >
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into tag_item (tiid, tidate, tiagree,
+        video_id, user_id, tag_id
+        )
+        values (#{tiid,jdbcType=INTEGER}, #{tidate,jdbcType=TIMESTAMP}, #{tiagree,jdbcType=INTEGER},
+        #{videoId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{tagId,jdbcType=INTEGER}
+        )
+    </insert>
+</mapper>

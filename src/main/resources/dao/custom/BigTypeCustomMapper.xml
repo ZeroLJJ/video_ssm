@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.BigTypeCustomMapper" >
+    <resultMap id="videoType" type="bigTypeBO" >
+        <id column="bid" property="bid" jdbcType="INTEGER" />
+        <result column="bname" property="bname" jdbcType="VARCHAR" />
+        <collection property="smallTypeBOList" ofType="smallTypeBO">
+            <id column="sid" property="sid" jdbcType="INTEGER" />
+            <result column="sname" property="sname" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <!-- 获取视频类型 -->
+    <select id="getVideoType" resultMap="videoType">
+        SELECT
+        b.*,
+        s.sid,
+        s.sname
+        FROM big_type b
+        LEFT JOIN small_type s
+        ON b.bid = s.big_type_id
+    </select>
+
+    <!-- 获取不同类型近期投稿新增的视频数量 -->
+    <select id="countRecentlyPostByType" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM video v
+        LEFT JOIN small_type s
+        ON s.sid = v.small_type_id
+        WHERE s.big_type_id = #{bid}
+        AND v.vadd_time > #{date}
+        AND v.vstatus = '1'
+    </select>
+
+</mapper>

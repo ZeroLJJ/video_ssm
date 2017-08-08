@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.TagMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.Tag" >
+    <id column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="tname" property="tname" jdbcType="VARCHAR" />
+    <result column="tvideo_num" property="tvideoNum" jdbcType="INTEGER" />
+    <result column="tsearch" property="tsearch" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tid, tname, tvideo_num, tsearch
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tag
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tag
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.po.Tag" >
+    insert into tag (tid, tname, tvideo_num, 
+      tsearch)
+    values (#{tid,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{tvideoNum,jdbcType=INTEGER}, 
+      #{tsearch,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.Tag" >
+    insert into tag
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="tname != null" >
+        tname,
+      </if>
+      <if test="tvideoNum != null" >
+        tvideo_num,
+      </if>
+      <if test="tsearch != null" >
+        tsearch,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tname != null" >
+        #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tvideoNum != null" >
+        #{tvideoNum,jdbcType=INTEGER},
+      </if>
+      <if test="tsearch != null" >
+        #{tsearch,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.Tag" >
+    update tag
+    <set >
+      <if test="tname != null" >
+        tname = #{tname,jdbcType=VARCHAR},
+      </if>
+      <if test="tvideoNum != null" >
+        tvideo_num = #{tvideoNum,jdbcType=INTEGER},
+      </if>
+      <if test="tsearch != null" >
+        tsearch = #{tsearch,jdbcType=INTEGER},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.Tag" >
+    update tag
+    set tname = #{tname,jdbcType=VARCHAR},
+      tvideo_num = #{tvideoNum,jdbcType=INTEGER},
+      tsearch = #{tsearch,jdbcType=INTEGER}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.UserCustomMapper" >
+    <resultMap id="UserBO" type="userBO">
+        <id column="uid" property="uid" jdbcType="VARCHAR" />
+        <result column="upassword" property="upassword" jdbcType="VARCHAR" />
+        <result column="uname" property="uname" jdbcType="VARCHAR" />
+        <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+        <result column="usex" property="usex" jdbcType="CHAR" />
+        <result column="ubirthday" property="ubirthday" jdbcType="DATE" />
+        <result column="uemail" property="uemail" jdbcType="VARCHAR" />
+        <result column="uphone" property="uphone" jdbcType="VARCHAR" />
+        <result column="usign" property="usign" jdbcType="VARCHAR" />
+        <result column="ufollow" property="ufollow" jdbcType="INTEGER" />
+        <result column="ufan" property="ufan" jdbcType="INTEGER" />
+        <result column="ucoin" property="ucoin" jdbcType="INTEGER" />
+        <result column="uworks" property="uworks" jdbcType="INTEGER" />
+        <result column="ulevel" property="ulevel" jdbcType="CHAR" />
+        <result column="uregdate" property="uregdate" jdbcType="TIMESTAMP" />
+        <result column="ustatus" property="ustatus" jdbcType="CHAR" />
+        <result column="ulastdate" property="ulastdate" jdbcType="TIMESTAMP" />
+        <result column="ulogin" property="ulogin" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getAllUser" parameterType="map" resultMap="UserBO">
+        SELECT *
+        FROM user
+        <where>
+            <if test="uname != null and uname !=''">
+                AND uname LIKE '%${uname}%'
+            </if>
+            AND ulevel = '2'
+        </where>
+    </select>
+
+    <select id="getAllUserIncludeAdmin" parameterType="map" resultMap="UserBO">
+        SELECT *
+        FROM user
+        <where>
+            <if test="uname != null and uname !=''">
+                AND uname LIKE '%${uname}%'
+            </if>
+        </where>
+    </select>
+</mapper>

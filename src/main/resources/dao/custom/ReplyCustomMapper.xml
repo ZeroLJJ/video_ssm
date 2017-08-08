@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.ReplyCustomMapper" >
+    <resultMap id="ReplyBO" type="replyBO">
+        <id column="rid" property="rid" jdbcType="INTEGER" />
+        <result column="rdate" property="rdate" jdbcType="TIMESTAMP" />
+        <result column="rtext" property="rtext" jdbcType="VARCHAR" />
+        <result column="ragree" property="ragree" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="comment_id" property="commentId" jdbcType="INTEGER" />
+        <association property="userBO" javaType="userBO">
+            <id column="uid" property="uid" jdbcType="VARCHAR" />
+            <result column="uname" property="uname" jdbcType="VARCHAR" />
+            <result column="usex" property="usex" jdbcType="CHAR" />
+            <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+            <result column="usign" property="usign" jdbcType="VARCHAR" />
+            <result column="ufollow" property="ufollow" jdbcType="INTEGER" />
+            <result column="ufan" property="ufan" jdbcType="INTEGER" />
+        </association>
+    </resultMap>
+
+    <!-- 回复分页查询语句 -->
+    <select id="getReplysByPage" parameterType="map" resultMap="ReplyBO">
+        SELECT
+        r.*,
+        u.uid,
+        u.uname,
+        u.usex,
+        u.uimg,
+        u.usign,
+        u.ufollow,
+        u.ufan
+        FROM Reply r left join user u
+        ON r.user_id = u.uid
+        <where>
+            r.comment_id = #{cid}
+        </where>
+        order by r.rid asc
+        LIMIT #{offset},#{pageSize}
+    </select>
+
+    <!-- 查询单个回复(BO)语句 -->
+    <select id="getReplyByPrimary" parameterType="int" resultMap="ReplyBO">
+        SELECT
+        r.*,
+        u.uid,
+        u.uname,
+        u.usex,
+        u.uimg,
+        u.usign,
+        u.ufollow,
+        u.ufan
+        FROM Reply r left join user u
+        ON r.user_id = u.uid
+        <where>
+            r.rid = #{rid}
+        </where>
+    </select>
+
+    <!-- 取得记录的总数 -->
+    <select id="getReplysCount" parameterType="int" resultType="java.lang.Integer">
+        SELECT COUNT(r.rid) FROM Reply r WHERE r.comment_id = #{cid}
+    </select>
+
+    <!-- 插入数据并返回主键存在输入的对象中 -->
+    <insert id="insert" parameterType="entity.po.Reply" >
+        <selectKey keyProperty='rid' resultType='int' order='AFTER'  >
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into reply (rdate, rtext,
+        ragree, user_id, comment_id
+        )
+        values (#{rdate,jdbcType=TIMESTAMP}, #{rtext,jdbcType=VARCHAR},
+        #{ragree,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{commentId,jdbcType=INTEGER}
+        )
+    </insert>
+
+    <delete id="deleteByCommentId" parameterType="int">
+        DELETE FROM reply
+        WHERE comment_id = #{cid}
+    </delete>
+
+</mapper>

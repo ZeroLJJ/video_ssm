@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.simple.UserMapper" >
+  <resultMap id="BaseResultMap" type="entity.po.User" >
+    <id column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="upassword" property="upassword" jdbcType="VARCHAR" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="uimg" property="uimg" jdbcType="VARCHAR" />
+    <result column="usex" property="usex" jdbcType="CHAR" />
+    <result column="ubirthday" property="ubirthday" jdbcType="DATE" />
+    <result column="uemail" property="uemail" jdbcType="VARCHAR" />
+    <result column="uphone" property="uphone" jdbcType="VARCHAR" />
+    <result column="usign" property="usign" jdbcType="VARCHAR" />
+    <result column="ufollow" property="ufollow" jdbcType="INTEGER" />
+    <result column="ufan" property="ufan" jdbcType="INTEGER" />
+    <result column="ucoin" property="ucoin" jdbcType="INTEGER" />
+    <result column="uworks" property="uworks" jdbcType="INTEGER" />
+    <result column="ulevel" property="ulevel" jdbcType="CHAR" />
+    <result column="uregdate" property="uregdate" jdbcType="TIMESTAMP" />
+    <result column="ustatus" property="ustatus" jdbcType="CHAR" />
+    <result column="ulastdate" property="ulastdate" jdbcType="TIMESTAMP" />
+    <result column="ulogin" property="ulogin" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, upassword, uname, uimg, usex, ubirthday, uemail, uphone, usign, ufollow, ufan, 
+    ucoin, uworks, ulevel, uregdate, ustatus, ulastdate, ulogin
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where uid = #{uid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="entity.po.User" >
+    insert into user (uid, upassword, uname, 
+      uimg, usex, ubirthday, uemail, 
+      uphone, usign, ufollow, 
+      ufan, ucoin, uworks, 
+      ulevel, uregdate, ustatus, 
+      ulastdate, ulogin)
+    values (#{uid,jdbcType=VARCHAR}, #{upassword,jdbcType=VARCHAR}, #{uname,jdbcType=VARCHAR}, 
+      #{uimg,jdbcType=VARCHAR}, #{usex,jdbcType=CHAR}, #{ubirthday,jdbcType=DATE}, #{uemail,jdbcType=VARCHAR}, 
+      #{uphone,jdbcType=VARCHAR}, #{usign,jdbcType=VARCHAR}, #{ufollow,jdbcType=INTEGER}, 
+      #{ufan,jdbcType=INTEGER}, #{ucoin,jdbcType=INTEGER}, #{uworks,jdbcType=INTEGER}, 
+      #{ulevel,jdbcType=CHAR}, #{uregdate,jdbcType=TIMESTAMP}, #{ustatus,jdbcType=CHAR}, 
+      #{ulastdate,jdbcType=TIMESTAMP}, #{ulogin,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.po.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="upassword != null" >
+        upassword,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="uimg != null" >
+        uimg,
+      </if>
+      <if test="usex != null" >
+        usex,
+      </if>
+      <if test="ubirthday != null" >
+        ubirthday,
+      </if>
+      <if test="uemail != null" >
+        uemail,
+      </if>
+      <if test="uphone != null" >
+        uphone,
+      </if>
+      <if test="usign != null" >
+        usign,
+      </if>
+      <if test="ufollow != null" >
+        ufollow,
+      </if>
+      <if test="ufan != null" >
+        ufan,
+      </if>
+      <if test="ucoin != null" >
+        ucoin,
+      </if>
+      <if test="uworks != null" >
+        uworks,
+      </if>
+      <if test="ulevel != null" >
+        ulevel,
+      </if>
+      <if test="uregdate != null" >
+        uregdate,
+      </if>
+      <if test="ustatus != null" >
+        ustatus,
+      </if>
+      <if test="ulastdate != null" >
+        ulastdate,
+      </if>
+      <if test="ulogin != null" >
+        ulogin,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="upassword != null" >
+        #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uimg != null" >
+        #{uimg,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        #{usex,jdbcType=CHAR},
+      </if>
+      <if test="ubirthday != null" >
+        #{ubirthday,jdbcType=DATE},
+      </if>
+      <if test="uemail != null" >
+        #{uemail,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="usign != null" >
+        #{usign,jdbcType=VARCHAR},
+      </if>
+      <if test="ufollow != null" >
+        #{ufollow,jdbcType=INTEGER},
+      </if>
+      <if test="ufan != null" >
+        #{ufan,jdbcType=INTEGER},
+      </if>
+      <if test="ucoin != null" >
+        #{ucoin,jdbcType=INTEGER},
+      </if>
+      <if test="uworks != null" >
+        #{uworks,jdbcType=INTEGER},
+      </if>
+      <if test="ulevel != null" >
+        #{ulevel,jdbcType=CHAR},
+      </if>
+      <if test="uregdate != null" >
+        #{uregdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ustatus != null" >
+        #{ustatus,jdbcType=CHAR},
+      </if>
+      <if test="ulastdate != null" >
+        #{ulastdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ulogin != null" >
+        #{ulogin,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.po.User" >
+    update user
+    <set >
+      <if test="upassword != null" >
+        upassword = #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uimg != null" >
+        uimg = #{uimg,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        usex = #{usex,jdbcType=CHAR},
+      </if>
+      <if test="ubirthday != null" >
+        ubirthday = #{ubirthday,jdbcType=DATE},
+      </if>
+      <if test="uemail != null" >
+        uemail = #{uemail,jdbcType=VARCHAR},
+      </if>
+      <if test="uphone != null" >
+        uphone = #{uphone,jdbcType=VARCHAR},
+      </if>
+      <if test="usign != null" >
+        usign = #{usign,jdbcType=VARCHAR},
+      </if>
+      <if test="ufollow != null" >
+        ufollow = #{ufollow,jdbcType=INTEGER},
+      </if>
+      <if test="ufan != null" >
+        ufan = #{ufan,jdbcType=INTEGER},
+      </if>
+      <if test="ucoin != null" >
+        ucoin = #{ucoin,jdbcType=INTEGER},
+      </if>
+      <if test="uworks != null" >
+        uworks = #{uworks,jdbcType=INTEGER},
+      </if>
+      <if test="ulevel != null" >
+        ulevel = #{ulevel,jdbcType=CHAR},
+      </if>
+      <if test="uregdate != null" >
+        uregdate = #{uregdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ustatus != null" >
+        ustatus = #{ustatus,jdbcType=CHAR},
+      </if>
+      <if test="ulastdate != null" >
+        ulastdate = #{ulastdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ulogin != null" >
+        ulogin = #{ulogin,jdbcType=INTEGER},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.po.User" >
+    update user
+    set upassword = #{upassword,jdbcType=VARCHAR},
+      uname = #{uname,jdbcType=VARCHAR},
+      uimg = #{uimg,jdbcType=VARCHAR},
+      usex = #{usex,jdbcType=CHAR},
+      ubirthday = #{ubirthday,jdbcType=DATE},
+      uemail = #{uemail,jdbcType=VARCHAR},
+      uphone = #{uphone,jdbcType=VARCHAR},
+      usign = #{usign,jdbcType=VARCHAR},
+      ufollow = #{ufollow,jdbcType=INTEGER},
+      ufan = #{ufan,jdbcType=INTEGER},
+      ucoin = #{ucoin,jdbcType=INTEGER},
+      uworks = #{uworks,jdbcType=INTEGER},
+      ulevel = #{ulevel,jdbcType=CHAR},
+      uregdate = #{uregdate,jdbcType=TIMESTAMP},
+      ustatus = #{ustatus,jdbcType=CHAR},
+      ulastdate = #{ulastdate,jdbcType=TIMESTAMP},
+      ulogin = #{ulogin,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=VARCHAR}
+  </update>
+</mapper>

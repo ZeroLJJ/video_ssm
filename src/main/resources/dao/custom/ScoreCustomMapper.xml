@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.ScoreCustomMapper" >
+    <resultMap id="score" type="entity.po.Score" >
+        <id column="scid" property="scid" jdbcType="INTEGER" />
+        <result column="scnum" property="scnum" jdbcType="INTEGER" />
+        <result column="scdate" property="scdate" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="video_id" property="videoId" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="selectByUserAndVideo" parameterType="map" resultMap="score">
+        SELECT *
+        FROM score
+        WHERE user_id = #{uid} AND video_id = #{vid}
+    </select>
+
+    <select id="getRecentlyScoreVideo" parameterType="string" resultMap="dao.custom.VideoCustomMapper.videoDetail">
+        SELECT v.*
+        FROM score s
+        LEFT JOIN video v
+        ON s.video_id = v.vid
+        WHERE s.user_id = #{uid}
+        ORDER BY s.scdate DESC
+        limit 0, 8
+    </select>
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="dao.custom.TagCustomMapper" >
+    <resultMap id="BaseResultMap" type="entity.po.Tag" >
+        <id column="tid" property="tid" jdbcType="INTEGER" />
+        <result column="tname" property="tname" jdbcType="VARCHAR" />
+        <result column="tvideo_num" property="tvideoNum" jdbcType="INTEGER" />
+        <result column="tsearch" property="tsearch" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="TagBO" type="tagBO" >
+        <id column="tid" property="tid" jdbcType="INTEGER" />
+        <result column="tname" property="tname" jdbcType="VARCHAR" />
+        <result column="tvideo_num" property="tvideoNum" jdbcType="INTEGER" />
+        <result column="tsearch" property="tsearch" jdbcType="INTEGER" />
+    </resultMap>
+
+    <!-- 不能直接使用resultType="tag"，因为列名tvideo_num与对象的属性名不一致，无法传入 -->
+    <select id="selectByName" parameterType="string" resultMap="BaseResultMap">
+        SELECT *
+        FROM tag
+        WHERE tname = #{name}
+    </select>
+
+    <insert id="insertReturnId" parameterType="tag" >
+        <selectKey keyProperty='tid' resultType='int' order='AFTER' >
+            select LAST_INSERT_ID();
+        </selectKey>
+        insert into tag (tid, tname, tvideo_num,
+        tsearch)
+        values (#{tid,jdbcType=INTEGER}, #{tname,jdbcType=VARCHAR}, #{tvideoNum,jdbcType=INTEGER},
+        #{tsearch,jdbcType=INTEGER})
+    </insert>
+
+    <select id="selectByTagItem" parameterType="int" resultMap="BaseResultMap">
+        SELECT t.*
+        FROM tag t
+        LEFT JOIN tag_item ti
+        ON t.tid = ti.tag_id
+        WHERE ti.tiid = #{tagItemId}
+    </select>
+
+    <select id="getAllTag" parameterType="map" resultMap="TagBO">
+        SELECT *
+        FROM tag
+        <where>
+            <if test="tname != null and tname != ''">
+                AND tname like '%${tname}%'
+            </if>
+        </where>
+    </select>
+
+</mapper>
